@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+  head
+    link(href='/stylesheets/style.css', rel='stylesheet')
+    link(rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css")
+
+  body
+    div.clearfix
+     div.wrapper
+      div.lobby-card.w3-card-4
+        div.question.w3-container.w3-blue  
+         h1 Welcome to the game!
+        div.register-card
+          div.name= user.username
+          div.team= user.teamname          
+        div.users
+        each teamname, team in teamlist
+          div.teamlist= team
+            each username, user in teamname
+              each key, value in username
+                div.teammates= key
+        footer.w3-container.w3-blue
+         h5 Just wait here, the page will refresh automatically at game time!

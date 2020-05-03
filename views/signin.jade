@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+  head
+    link(href='/stylesheets/style.css', rel='stylesheet')
+
+  body
+    div.clearfix
+      div.wrapper  
+        div.register-card
+          form(action='/lobby',method='get')
+            label Enter your name:
+              input(type=type, id='username' value='#{username}', name='username')
+            label Enter your TEAM name (spell it correctly!): 
+              input(type="text", id='team', value='#{teamname}', name='teamname')
+            h3 Submit your name and team!
+            a(id="submit" onclick="sendName()")
+              button(type="button") Previous Question
+
+            
+  script.
+   var sendName = function () {  
+    var username = document.getElementById('username');
+    var teamname = document.getElementById('team');
+    var button = document.getElementById('submit');
+    button.href = "/lobby?username=" + username.value + "&teamname=" + teamname.value;
+   }
+  
