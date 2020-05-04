@@ -7,10 +7,20 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  // Test if the game is inplay!
+  // If yes, display the current question
+  // If no, redirect to the lobby
+  if (contest.hasGameStarted() === true) {
+    console.log(`The game has begun so bounce to the question page`);
+  } else {
+    console.log(`The game is paused, go to the lobby!`);
+    res.redirect(`${req.path}\lobby`);
+  }
+
   // If they have submitted a question response, grab it and display selected
   if (req.query.questionid !== undefined && req.query.answerid !== undefined) {
     const username = req.cookies["trivial"].username;
-    const questionid = parseInt(req.query.questionid,10);
+    const questionid = parseInt(req.query.questionid, 10);
     const answerid = req.query.answerid;
     const uniqueID = username + questionid;
 
@@ -29,7 +39,6 @@ router.get("/", function (req, res, next) {
 
     // Remove the parameters from the url so we can safely refresh
     res.redirect(`${req.path}\comp`);
-
   } else {
     const username = req.cookies["trivial"].username;
     const questionid = contest.getCurrentQuestionID();

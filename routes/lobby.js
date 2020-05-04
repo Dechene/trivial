@@ -1,4 +1,6 @@
 const users = require("../users");
+const contest = require("../contest");
+
 var express = require("express");
 var router = express.Router();
 
@@ -16,7 +18,8 @@ router.get("/", function (req, res, next) {
   const isEmptyCookie = isEmpty(req.cookies);
   const isEmptyParams = JSON.stringify(req.query) === "{}" ? true : false;
 
-  let add = false;
+  let add = false,
+    readyToPlay = false;
 
   let user = {
     username: `Unknown`,
@@ -36,6 +39,7 @@ router.get("/", function (req, res, next) {
 
     if (add) {
       console.log(`USER SIGNIN - About to insert COOKIE for ${user.username}`);
+      readyToPlay = true;
       res.cookie("trivial", user);
     } else {
       console.log(`USER SIGNIN - Failed to add ${user.username} due to duplicate account existing`);
@@ -52,6 +56,7 @@ router.get("/", function (req, res, next) {
       username: req.cookies["trivial"].username,
       teamname: req.cookies["trivial"].teamname,
     };
+    readyToPlay = true;
   } else if (isEmptyCookie && isEmptyParams) {
     console.log(`USER SIGNIN - No cookie, and no params received`);
     user = {
@@ -60,8 +65,20 @@ router.get("/", function (req, res, next) {
     };
   }
 
-  // Render the darn thing!
-  res.render("lobby", { user, teamlist: users.getTeams() });
+  // Test if the game has begun or not - if yes, start playing, if not, stay in the lobby
+  if (contest.hasGameStarted() === true && readyToPlay) {
+    console.log(`The game has begun so redirecting the user now`);
+    res.redirect(`${req.path}\comp`);
+  } else {
+    // Render the darn thing if the game has not started
+    console.log(
+      `The game hasn't started so ${JSON.stringify({
+        user,
+        teamlist: users.getTeams(),
+      })} is just hanging in the lobby`
+    );
+    res.render("lobby", { user, teamlist: users.getTeams() });
+  }
 });
 
 // Insanely overkill method to test that the cookie is empty or not

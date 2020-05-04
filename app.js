@@ -1,4 +1,3 @@
-const contest = require("./contest");
 const users = require("./users");
 
 var createError = require("http-errors");
@@ -7,12 +6,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-//const state = new contest();
-
-//console.log(` app.js state.questioncount is: ${state.questionCount}`);
-
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
 var adminRouter = require("./routes/admin");
 var compRouter = require("./routes/comp");
 var lobbyRouter = require("./routes/lobby");
@@ -31,7 +25,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/admin", adminRouter);
 app.use("/comp", compRouter);
 app.use("/lobby", lobbyRouter);
@@ -63,5 +56,4 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-module.exports.state = this.state;
 module.exports = app;

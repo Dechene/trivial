@@ -1,5 +1,12 @@
 this.current = 0;
-this.responses = responses = [];
+this.gameStarted = false;
+
+this.responses = responses = [
+  { uniqueID: "Nickname0", username: "Nickname", questionid: 0, answerid: 4 },
+  { uniqueID: "Nickname1", username: "Nickname", questionid: 1, answerid: 1 },
+  { uniqueID: "Nickname2", username: "Nickname", questionid: 2, answerid: 3 },
+];
+
 /*   {
   uniquedid: "mario2"   
     username: "mario",
@@ -55,6 +62,25 @@ function getQuestion(id) {
   return this.questions[this.current];
 }
 
+function getResponses() {
+  return responses;
+}
+
+function hasGameStarted() {
+  //this.gameStarted = true;
+  return this.gameStarted;
+}
+
+function startGame() {
+  this.gameStarted = true;
+  return this.gameStarted;
+}
+
+function endGame() {
+  this.gameStarted = false;
+  return this.gameStarted;
+}
+
 //Return the answer someone has given
 function getSubmission(unique) {
   const arr = responses.find(el => el.uniqueID === unique);
@@ -86,7 +112,7 @@ function movePre() {
 
 function getAnswers(questionid) {
   const arr = responses.filter(unique => unique.questionid == questionid);
-  console.log(JSON.stringify(responses));
+  //console.log(JSON.stringify(responses));
   return arr;
 }
 
@@ -103,11 +129,30 @@ function submitAnswer(response) {
   //console.log(response);
 }
 
+// console.log(`${el.questionID === questionid}`);
+function getCorrectAnswer(questionid) {
+  /*   const arr = questions.filter(el => {
+    el.questionID === questionid;
+    console.log(`${JSON.stringify(el)} is the array`);
+  }); */
+
+ /*  const arr = questions.findIndex(el => {
+    el.questionID == questionid;
+    console.log(`${JSON.stringify(el)} is the array`);
+  });
+
+  console.log(`${arr} is the array`);
+  return arr; */
+}
+
 module.exports = {
   current: this.current,
+  gameStarted: this.gameStarted,
   questionCount: this.questionCount,
   questions: this.questions,
   responses: this.responses,
+  getResponses: getResponses,
+  getCorrectAnswer: getCorrectAnswer,
   getCurrentQuestionID: getCurrentQuestionID,
   getQuestion: getQuestion,
   getCurrentQuestion: getCurrentQuestion,
@@ -116,6 +161,9 @@ module.exports = {
   submitAnswer: submitAnswer,
   getAnswers: getAnswers,
   getSubmission: getSubmission,
+  hasGameStarted: hasGameStarted,
+  startGame: startGame,
+  endGame: endGame,
 };
 
 // module.exports = Contest;

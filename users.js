@@ -5,118 +5,66 @@ const users = [];
 function fakeAccounts() {
   const fakes = [
     {
-      username: "Marky Mark",
-      teamname: "team1",
-    },
-    {
-      username: "Jimmy Jam",
-      teamname: "Bluesss",
-    },
-    {
       username: "Bobby Boo",
-      teamname: "teadddmwfh",
-    },
-    {
-      username: "Marky Mark",
-      teamname: "teavcxcmThree",
-    },
-    {
-      username: "Jimmy Jam",
       teamname: "Blues",
-    },
-    {
-      username: "Bobby Boo",
-      teamname: "teamwfh",
-    },
-    {
-      username: "Marky Mark",
-      teamname: "teavxcmThree",
-    },
-    {
-      username: "Jimmy Jam",
-      teamname: "Bexvcd",
-    },
-    {
-      username: "Bobby Boo",
-      teamname: "teamThree",
-    },
-    {
-      username: "Marky Mark",
-      teamname: "Doghouse",
+      score: 0,
     },
     {
       username: "Jimmy Jam",
       teamname: "team1",
-    },
-    {
-      username: "Bobby Boo",
-      teamname: "Blues",
-    },
-    {
-      username: "Marky Mark",
-      teamname: "teamThree",
-    },
-    {
-      username: "Jimmy Jam",
-      teamname: "Red",
-    },
-    {
-      username: "Bobby Boo",
-      teamname: "teamRed",
-    },
-    {
-      username: "Marky Mark",
-      teamname: "BedRed",
-    },
-    {
-      username: "Jimmy Jam",
-      teamname: "DogRedhouse",
-    },
-    {
-      username: "Bobby Boo",
-      teamname: "Blues",
-    },
-    {
-      username: "Jimmy Jam",
-      teamname: "team1",
+      score: 0,
     },
     {
       username: "Bobby Boo",
       teamname: "teamThree",
+      score: 0,
     },
     {
       username: "Marky Mark",
       teamname: "Bed",
+      score: 0,
     },
     {
       username: "Bobby Boo",
       teamname: "Blues",
+      score: 0,
     },
     {
       username: "Jimmy Jam",
       teamname: "team1",
+      score: 0,
     },
     {
       username: "Bobby Boo",
       teamname: "teamThree",
+      score: 0,
     },
     {
       username: "Marky Mark",
       teamname: "Bed",
+      score: 0,
     },
     {
       username: "Jimmy Jam",
       teamname: "Doghouse",
+      score: 0,
     },
     {
       username: "Bobby Boo",
       teamname: "Blues",
+      score: 0,
     },
   ];
 
   users.push(...fakes);
   console.log(`number of users in game: ${users.length}`);
   console.log(JSON.stringify(users));
+}
+
+function getUserScore(unique) {
+  const arr = users.find(el => el.uniqueID === unique);
+  if (arr !== undefined) return 0;
+  return arr.score;
 }
 
 function getUsers() {
@@ -147,9 +95,16 @@ function addUser(newuser) {
   }
 }
 
+// manually called by the admin
+function checkAnswers() {
+  users.forEach(el => {});
+}
+
 module.exports = {
+  checkAnswers: checkAnswers,
   addUser: addUser,
   fakeAccounts: fakeAccounts,
   getUsers: getUsers,
   getTeams: getTeams,
+  getUserScore: getUserScore,
 };

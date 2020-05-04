@@ -48,7 +48,7 @@ li {
   color: #00b7ff;
 }
 
-button {
+/* button {
   color: #555;
   background: white;
   border: none;
@@ -61,12 +61,13 @@ button {
 }
 
 button:hover {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 button:focus {
   outline: none;
 }
+ */
 
 .teammates {
   list-style-type: none;
@@ -90,12 +91,10 @@ button:focus {
   text-transform: uppercase;
   text-align: center;
   border: none;
-
 }
 
-.selected{
+.selected {
   background-color: rgb(34, 45, 95);
   border-radius: 10px;
   text-transform: uppercase;
-
 }
