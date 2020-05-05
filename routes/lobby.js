@@ -36,6 +36,7 @@ router.get("/", function (req, res, next) {
 
     // We have to test the length for some unknown chrome bug reason
     if (user.username !== "") add = users.addUser(user);
+    if (user.username !== "") addss = users.addUserV2(user);
 
     if (add) {
       console.log(`USER SIGNIN - About to insert COOKIE for ${user.username}`);
@@ -74,10 +75,10 @@ router.get("/", function (req, res, next) {
     console.log(
       `The game hasn't started so ${JSON.stringify({
         user,
-        teamlist: users.getTeams(),
+        teamlist: users.getTeamsv2(),
       })} is just hanging in the lobby`
     );
-    res.render("lobby", { user, teamlist: users.getTeams() });
+    res.render("lobby", { user, teamlist: users.getTeamsv2() });
   }
 });
 

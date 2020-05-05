@@ -40,35 +40,35 @@ router.get("/", function (req, res, next) {
 
 // manually called by the admin
 function checkAnswers() {
-  //const arr = responses.filter(unique => unique.questionid == questionid);
+  /* each team, teamname in teamlist
+     div.teamlist= teamname
+     each username, score in team
+     div.teammates #{username.username} - #{username.score} */
 
-  // contest  - list of all questions and options
-  // users - list of all users and points
-  // responses - list of all submitted responses
+  const teamlist = users.getTeamsv2();
 
-  console.log("Here are the answers in the system");
+  teamlist.forEach(team => {
+    console.log(team.teamname);
+
+    for (let i = 0; i < team.players.length; i++) {
+      console.log(`player: ${team.players[i]} has a score of ${team.scores[i]} `);
+    }
+  });
+
+  console.log(JSON.stringify(`${teamlist}`));
 
   const correct = contest.getResponses();
 
-  //console.log(correct);
-
-  correct.forEach(el => {
-    const arr = contest.getCorrectAnswer(el.questionid);
-    console.log(`arr is ${arr}`);
-
-    // console.log(
-    //   `Submitted answer: ${el.answerid} for question ${
-    //     el.questionid
-    //   } and actual answer ${JSON.stringify(contest.getCorrectAnswer(el.questionid).answer)}`
-    // );
-
-    //console.log(correct);
-    //test if this answer is correct
-    //const correctanswer = contest.filter(q => q.questionID === el.questionid).answerid;
-
-    // was correct
-    // if (correctanswer == el.answerid) users.filter(u => u.username === el.username).score++;
-  });
+  /*   correct.forEach(el => {
+    // get the correct answer for this question
+    const correct = contest.getCorrectAnswer(el.questionid);
+    // test if they got it right
+    if (el.answerid === correct) {
+      //correct answer, give the man a point!
+      users.setUserScore(contest.getPoints(el.questionid), el.username);
+      //console.log(`${el.username} got ${el.questionid} correct`);
+    }
+  }); */
 }
 
 module.exports = router;

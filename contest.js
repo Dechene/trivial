@@ -23,6 +23,7 @@ this.questions = questions = [
     answers: ["eleven", "seventeen", "forty", "twenty"],
     answer: 4,
     questionImage: "",
+    points: 1,
   },
   {
     questionID: 1,
@@ -31,6 +32,7 @@ this.questions = questions = [
     answers: ["The cow", "The dog", "The crow", "The hen"],
     answer: 1,
     questionImage: "",
+    points: 1,
   },
   {
     questionID: 2,
@@ -39,6 +41,7 @@ this.questions = questions = [
     answers: ["The Sun", "The Earth", "The MCG", "The Universe"],
     answer: 4,
     questionImage: "",
+    points: 1,
   },
   {
     questionID: 3,
@@ -47,6 +50,7 @@ this.questions = questions = [
     answers: ["No", "No", "Yes", "No"],
     answer: 3,
     questionImage: "",
+    points: 1,
   },
 ];
 
@@ -131,18 +135,12 @@ function submitAnswer(response) {
 
 // console.log(`${el.questionID === questionid}`);
 function getCorrectAnswer(questionid) {
-  /*   const arr = questions.filter(el => {
-    el.questionID === questionid;
-    console.log(`${JSON.stringify(el)} is the array`);
-  }); */
+  const arr = questions.filter(el => el.questionID === questionid);
+  return arr[0].answer;
+}
 
- /*  const arr = questions.findIndex(el => {
-    el.questionID == questionid;
-    console.log(`${JSON.stringify(el)} is the array`);
-  });
-
-  console.log(`${arr} is the array`);
-  return arr; */
+function getPoints(questionid) {
+  return questions[questionid].points;
 }
 
 module.exports = {
@@ -164,6 +162,7 @@ module.exports = {
   hasGameStarted: hasGameStarted,
   startGame: startGame,
   endGame: endGame,
+  getPoints: getPoints,
 };
 
 // module.exports = Contest;
