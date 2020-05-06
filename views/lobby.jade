@@ -14,17 +14,9 @@ html(lang="en")
           div.name= user.username
           div.team= user.teamname          
         div.users
-         each team in teamlist
-          div.teamlist= team.teamname
-           each player, index in team.players
-             div.teammates #{player} - #{team.scores[index]}
+         each t in teamlist
+          div.teamlist= t.teamname
+           each player, index in t.players
+             div.teammates #{player} - #{t.scores[index]}
         footer.w3-container.w3-blue
          h5 Just wait here, the page will refresh automatically at game time!  
-
-
-        //- div.users
-        //-  each team, teamname in teamlist
-        //-   div.teamlist= teamname
-        //-     each username, score in team
-        //-      div.teammates #{username.username} - #{username.score}
-        //- footer.w3-container.w3-blue

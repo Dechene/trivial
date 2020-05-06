@@ -35,9 +35,8 @@ router.get("/", function (req, res, next) {
     };
 
     // We have to test the length for some unknown chrome bug reason
-    if (user.username !== "") add = users.addUser(user);
-    if (user.username !== "") addss = users.addUserV2(user);
-
+    if (user.username !== "") add = users.addUserV2(user);
+   
     if (add) {
       console.log(`USER SIGNIN - About to insert COOKIE for ${user.username}`);
       readyToPlay = true;

@@ -1,11 +1,13 @@
 this.current = 0;
-this.gameStarted = false;
+this.gameStarted = true;
 
-this.responses = responses = [
+this.responses = responses = [];
+
+/* this.responses = responses = [
   { uniqueID: "Nickname0", username: "Nickname", questionid: 0, answerid: 4 },
   { uniqueID: "Nickname1", username: "Nickname", questionid: 1, answerid: 1 },
   { uniqueID: "Nickname2", username: "Nickname", questionid: 2, answerid: 3 },
-];
+]; */
 
 /*   {
   uniquedid: "mario2"   
@@ -50,6 +52,15 @@ this.questions = questions = [
     answers: ["No", "No", "Yes", "No"],
     answer: 3,
     questionImage: "",
+    points: 1,
+  },
+  {
+    questionID: 4,
+    compName: "Trivial - Test Comp",
+    titleQuestion: "What is this?",
+    answers: ["Horse", "Cow", "Dinosaur", "Dog"],
+    answer: 4,
+    questionImage: "https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1417653393857-6SJXZGIGV77UUMEY30K2/ke17ZwdGBToddI8pDm48kKiWKbKvdu30GcQDkq6b7Op7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1USjxwNA0bqpwLlI-XpsFBm3yrizlHwjDZysGaJGZcoyQcomz19-brHpUIhE0EA2opw/ts_head.jpg?format=2500w",
     points: 1,
   },
 ];
@@ -130,13 +141,13 @@ function submitAnswer(response) {
   console.log(
     `User: ${response.username} has guessed ${response.answerid} for question ${response.questionid}!`
   );
-  //console.log(response);
 }
 
 // console.log(`${el.questionID === questionid}`);
 function getCorrectAnswer(questionid) {
   const arr = questions.filter(el => el.questionID === questionid);
-  return arr[0].answer;
+  console.log(`printout the question: ${JSON.stringify(arr)}`);
+  return parseInt(arr[0].answer);
 }
 
 function getPoints(questionid) {

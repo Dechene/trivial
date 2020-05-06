@@ -30,9 +30,8 @@ app.use("/comp", compRouter);
 app.use("/lobby", lobbyRouter);
 app.use("/signin", signinRouter);
 
-
-// testing calls only 
-users.fakeAccounts();
+// testing calls only
+//users.fakeAccounts();
 
 ///////////////////////////////////
 // ERROR HANDLING

@@ -21,7 +21,7 @@ router.get("/", function (req, res, next) {
   if (req.query.questionid !== undefined && req.query.answerid !== undefined) {
     const username = req.cookies["trivial"].username;
     const questionid = parseInt(req.query.questionid, 10);
-    const answerid = req.query.answerid;
+    const answerid = parseInt(req.query.answerid);
     const uniqueID = username + questionid;
 
     const response = {

@@ -40,35 +40,20 @@ router.get("/", function (req, res, next) {
 
 // manually called by the admin
 function checkAnswers() {
-  /* each team, teamname in teamlist
-     div.teamlist= teamname
-     each username, score in team
-     div.teammates #{username.username} - #{username.score} */
-
-  const teamlist = users.getTeamsv2();
-
-  teamlist.forEach(team => {
-    console.log(team.teamname);
-
-    for (let i = 0; i < team.players.length; i++) {
-      console.log(`player: ${team.players[i]} has a score of ${team.scores[i]} `);
-    }
-  });
-
-  console.log(JSON.stringify(`${teamlist}`));
-
+  users.clearScores();
   const correct = contest.getResponses();
 
-  /*   correct.forEach(el => {
+  console.log(`responses: ${JSON.stringify(correct)}`);
+
+  correct.forEach(el => {
     // get the correct answer for this question
+    console.log(`questionid passing in: ${el.questionid}`);
     const correct = contest.getCorrectAnswer(el.questionid);
-    // test if they got it right
+
     if (el.answerid === correct) {
-      //correct answer, give the man a point!
-      users.setUserScore(contest.getPoints(el.questionid), el.username);
-      //console.log(`${el.username} got ${el.questionid} correct`);
+      users.setUserScore(contest.getPoints(el.questionid), el.username, users.getTeam(el.username));
     }
-  }); */
+  });
 }
 
 module.exports = router;
