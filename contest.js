@@ -1,3 +1,7 @@
+//https://opentdb.com/api.php?amount=50&category=11&type=multiple
+const csv = require("csv-parser");
+const fs = require("fs");
+
 this.current = 0;
 this.gameStarted = true;
 
@@ -17,50 +21,14 @@ this.responses = responses = [];
   },
 ]; */
 
-this.questions = questions = [
+this.questions = [
   {
     questionID: 0,
     compName: "Trivial - Test Comp",
-    titleQuestion: "What is 10 + 10",
-    answers: ["eleven", "seventeen", "forty", "twenty"],
+    titleQuestion: "What is 1 + 1?",
+    answers: ["1", "2", "3", "4"],
     answer: 4,
     questionImage: "",
-    points: 1,
-  },
-  {
-    questionID: 1,
-    compName: "Trivial - Test Comp",
-    titleQuestion: "Who jumped over the moon?",
-    answers: ["The cow", "The dog", "The crow", "The hen"],
-    answer: 1,
-    questionImage: "",
-    points: 1,
-  },
-  {
-    questionID: 2,
-    compName: "Trivial - Test Comp",
-    titleQuestion: "What is the biggest?",
-    answers: ["The Sun", "The Earth", "The MCG", "The Universe"],
-    answer: 4,
-    questionImage: "",
-    points: 1,
-  },
-  {
-    questionID: 3,
-    compName: "Trivial - Test Comp",
-    titleQuestion: "Will this succeed?",
-    answers: ["No", "No", "Yes", "No"],
-    answer: 3,
-    questionImage: "",
-    points: 1,
-  },
-  {
-    questionID: 4,
-    compName: "Trivial - Test Comp",
-    titleQuestion: "What is this?",
-    answers: ["Horse", "Cow", "Dinosaur", "Dog"],
-    answer: 4,
-    questionImage: "https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/1417653393857-6SJXZGIGV77UUMEY30K2/ke17ZwdGBToddI8pDm48kKiWKbKvdu30GcQDkq6b7Op7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1USjxwNA0bqpwLlI-XpsFBm3yrizlHwjDZysGaJGZcoyQcomz19-brHpUIhE0EA2opw/ts_head.jpg?format=2500w",
     points: 1,
   },
 ];
@@ -74,7 +42,42 @@ function getQuestion(id) {
     this.current = 0; // loop to the first question
   }
 
+  console.log(`On questionid ${this.current} out of ${this.questionCount}`);
   return this.questions[this.current];
+}
+
+function loadContest() {
+  // load the file from the server
+
+  fs.createReadStream("./contest/contest1.csv")
+    .pipe(csv())
+    .on("data", row => {
+      // console.log(row);
+
+      const q = {
+        questionID: this.questions.length,
+        compName: "Trivial - Test Comp",
+        titleQuestion: row.titleQuestion,
+        answers: [row.ans1, row.ans2, row.ans3, row.ans4],
+        answer: row.answerid,
+        questionImage: row.image,
+        points: 1,
+      };
+
+      this.questions.push(q);
+    })
+    .on("end", () => {
+      this.current = 0;
+      this.questionCount = this.questions.length;
+      console.log(
+        `CSV file successfully processed. On questionid ${this.current} out of ${this.questionCount}`
+      );
+    });
+
+  this.current = 0;
+  this.questionCount = this.questions.length;
+
+  // save it into the contest format
 }
 
 function getResponses() {
@@ -103,7 +106,7 @@ function getSubmission(unique) {
 }
 
 function getCurrentQuestion() {
-  return questions[this.current];
+  return this.questions[this.current];
 }
 
 function getCurrentQuestionID() {
@@ -114,7 +117,6 @@ function moveNext() {
   if (this.current < this.questions.length - 1) {
     this.current++;
   }
-
   return this.current;
 }
 
@@ -157,7 +159,6 @@ function getPoints(questionid) {
 module.exports = {
   current: this.current,
   gameStarted: this.gameStarted,
-  questionCount: this.questionCount,
   questions: this.questions,
   responses: this.responses,
   getResponses: getResponses,
@@ -174,6 +175,7 @@ module.exports = {
   startGame: startGame,
   endGame: endGame,
   getPoints: getPoints,
+  loadContest: loadContest,
 };
 
 // module.exports = Contest;

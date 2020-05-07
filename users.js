@@ -64,7 +64,8 @@ function addUserV2(newuser) {
   return true;
 }
 
-const teams = [
+const teams = [];
+/* const teams = [
   {
     teamname: "Blues",
     players: ["Bob", "Jane", "TMart"],
@@ -85,7 +86,7 @@ const teams = [
     players: ["Rio", "Rollo", "Rello"],
     scores: [0, 0, 0],
   },
-];
+]; */
 
 function getUserScoreDEAD(unique) {
   const arr = users.find(el => el.uniqueID === unique);

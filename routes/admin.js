@@ -20,12 +20,15 @@ router.get("/", function (req, res, next) {
     contest.startGame();
   } else if (action === "score") {
     checkAnswers();
+  } else if (action === "load") {
+    contest.loadContest();
   }
 
   const gameState = contest.hasGameStarted();
 
   // get the current question
   const question = contest.getCurrentQuestion();
+  console.log(contest.getCurrentQuestion());
 
   // count up how many answers we have so far for this question
   const count = contest.getAnswers(question.questionID).length;

@@ -12,6 +12,7 @@ router.get("/", function (req, res, next) {
   // If no, redirect to the lobby
   if (contest.hasGameStarted() === true) {
     console.log(`The game has begun so bounce to the question page`);
+    console.log(`The current questionid from comp page is ${contest.getCurrentQuestionID()}`);
   } else {
     console.log(`The game is paused, go to the lobby!`);
     res.redirect(`${req.path}\lobby`);
@@ -48,6 +49,7 @@ router.get("/", function (req, res, next) {
 
     // Return the current question to the user
     const curQuestion = contest.getQuestion(contest.getCurrentQuestionID());
+
     res.render("comp", { curQuestion: curQuestion, selected: selected });
   }
 });
