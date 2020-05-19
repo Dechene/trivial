@@ -1,5 +1,6 @@
 const users = require("../users");
 const contest = require("../contest");
+const util = require("../util");
 
 var express = require("express");
 var router = express.Router();
@@ -15,7 +16,7 @@ var router = express.Router();
 
 router.get("/", function (req, res, next) {
   // Test the attributes which have been passed in to us
-  const isEmptyCookie = isEmpty(req.cookies);
+  const isEmptyCookie = util.isEmpty(req.cookies);
   const isEmptyParams = JSON.stringify(req.query) === "{}" ? true : false;
 
   let add = false,
@@ -61,7 +62,7 @@ router.get("/", function (req, res, next) {
     console.log(`USER SIGNIN - No cookie, and no params received`);
     user = {
       username: `I don't know who you are!`,
-      teamname: `Make sure cookies are enabled and try again!`,
+      teamname: `Make sure cookies are enabled and try signing in again!`,
     };
   }
 
@@ -80,13 +81,5 @@ router.get("/", function (req, res, next) {
     res.render("lobby", { user, teamlist: users.getTeamsv2() });
   }
 });
-
-// Insanely overkill method to test that the cookie is empty or not
-function isEmpty(obj) {
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) return false;
-  }
-  return JSON.stringify(obj) === JSON.stringify({});
-}
 
 module.exports = router;

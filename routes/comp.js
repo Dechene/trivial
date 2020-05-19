@@ -2,11 +2,30 @@
 
 // Get our Contest object
 const contest = require("../contest");
+const util = require("../util");
+const users = require("../users");
+
 var express = require("express");
 var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+
+  const isEmptyCookie = util.isEmpty(req.cookies);
+  const isEmptyParams = JSON.stringify(req.query) === "{}" ? true : false;
+
+  let pushSignIn = false;
+
+  let user = {
+    username: `Unknown`,
+    teamname: `Unknown`,
+  };
+
+  if (isEmptyCookie && isEmptyParams) {
+    console.log(`USER SIGNIN - No cookie, and no params received`);
+    pushSignIn = true;
+  }
+
   // Test if the game is inplay!
   // If yes, display the current question
   // If no, redirect to the lobby
@@ -40,18 +59,27 @@ router.get("/", function (req, res, next) {
 
     // Remove the parameters from the url so we can safely refresh
     res.redirect(`${req.path}\comp`);
-  } else {
-    const username = req.cookies["trivial"].username;
-    const questionid = contest.getCurrentQuestionID();
-    const uniqueID = username + questionid;
+  } else if (pushSignIn === false) {
 
-    const selected = contest.getSubmission(uniqueID);
+      const username = req.cookies["trivial"].username;
+      const questionid = contest.getCurrentQuestionID();
+      const uniqueID = username + questionid;
 
+      const selected = contest.getSubmission(uniqueID);
+    
     // Return the current question to the user
     const curQuestion = contest.getQuestion(contest.getCurrentQuestionID());
 
     res.render("comp", { curQuestion: curQuestion, selected: selected });
+  } else if (pushSignIn === true) {
+    console.log(`USER SIGNIN - No cookie, and no params received`);
+    user = {
+      username: `I don't know who you are!`,
+      teamname: `Make sure cookies are enabled and try signing in again!`,
+    };
+    res.render("lobby", { user, teamlist: users.getTeamsv2() });
   }
+
 });
 
 module.exports = router;
