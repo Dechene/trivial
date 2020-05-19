@@ -16,6 +16,7 @@ function clearScores() {
 }
 
 function setUserScore(points, username, teamname) {
+  console.log(`POINTS ${points} USERNAME ${username} TEAMNAME ${teamname}`);
   const teamIndex = teams.findIndex(el => el.teamname === teamname);
   const scoreIndex = teams[teamIndex].players.findIndex(el => el === username);
 

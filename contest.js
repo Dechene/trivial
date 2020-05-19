@@ -147,13 +147,13 @@ function submitAnswer(response) {
 
 // console.log(`${el.questionID === questionid}`);
 function getCorrectAnswer(questionid) {
-  const arr = questions.filter(el => el.questionID === questionid);
+  const arr = this.questions.filter(el => el.questionID === questionid);
   console.log(`printout the question: ${JSON.stringify(arr)}`);
   return parseInt(arr[0].answer);
 }
 
 function getPoints(questionid) {
-  return questions[questionid].points;
+  return this.questions[questionid].points;
 }
 
 module.exports = {

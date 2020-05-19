@@ -1,4 +1,4 @@
-const users = require("./users");
+const contest = require("./contest");
 
 var createError = require("http-errors");
 var express = require("express");
@@ -33,7 +33,7 @@ app.use("/lobby", lobbyRouter);
 app.use("/signin", signinRouter);
 
 // testing calls only
-//users.fakeAccounts();
+contest.loadContest();
 
 ///////////////////////////////////
 // ERROR HANDLING

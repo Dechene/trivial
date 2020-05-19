@@ -32,5 +32,10 @@ html(lang="en")
               a(href="/admin?action=start").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Start Game 
               a(href="/admin?action=score").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Check Answers
               a(href="/admin?action=load").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Load Contest
+          div.users
+            each t in teamlist
+             div.teamlist= t.teamname
+              each player, index in t.players
+               div.teammates #{player} - #{t.scores[index]}
           footer.w3-container.w3-blue
             h5 There have been #{count} answers submitted so far!

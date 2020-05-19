@@ -70,7 +70,7 @@ router.get("/", function (req, res, next) {
     // Return the current question to the user
     const curQuestion = contest.getQuestion(contest.getCurrentQuestionID());
 
-    res.render("comp", { curQuestion: curQuestion, selected: selected });
+    res.render("comp", { curQuestion: curQuestion, selected: selected, username });
   } else if (pushSignIn === true) {
     console.log(`USER SIGNIN - No cookie, and no params received`);
     user = {

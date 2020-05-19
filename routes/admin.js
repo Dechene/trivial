@@ -10,19 +10,14 @@ router.get("/", function (req, res, next) {
   // Test the attributes which have been passed in to us
   const isEmptyCookie = util.isEmpty(req.cookies);
 
-  let user = {
-    username: ``
-  }
+  let user = { username: `` }
 
   if (!isEmptyCookie) {
-    user = {
-      username: req.cookies["trivial"].username
-    }
+    user.username = req.cookies["trivial"].username;
   }
   const isAdmin = util.isAdmin(user);
 
   if (isAdmin) {
-
 
     // look for a passed in action item
     const action = req.query.action ? req.query.action : "";
@@ -53,7 +48,7 @@ router.get("/", function (req, res, next) {
     // console.log({ question, count, gameState });
     // Display as normal, or remove the parameters from the url so we can safely refresh
     if (action === "") {
-      res.render("admin", { question, count, gameState });
+      res.render("admin", { question, count, gameState, teamlist: users.getTeamsv2()  });
     } else {
       res.redirect(`${req.path}\admin`);
     }
