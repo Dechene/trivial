@@ -13,7 +13,9 @@ var lobbyRouter = require("./routes/lobby");
 var signinRouter = require("./routes/signin");
 
 var app = express();
+var port = 8080;
 
+app.listen(port, () => console.log(`Trivial listening on Port ${port}`));
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
