@@ -5,7 +5,6 @@ html(lang="en")
     link(rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css")
     meta(http-equiv='refresh', content='10')
 
-
   body
     div.clearfix
       div.wrapper  
@@ -25,8 +24,13 @@ html(lang="en")
             - var i = 0;
             each option in question.answers
               - i++;
+              - if (question.answer == i){
+              div.response.selected
+               a.w3-button.w3-block= option
+              - } else {
               div.response
-              a.w3-button.w3-block= option
+               a.w3-button.w3-block= option
+              - }
             div.admin.w3-container
               a(href="/admin?action=pause").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Pause Game  
               a(href="/admin?action=start").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Start Game 
