@@ -3,7 +3,7 @@ const _ = require("underscore");
 const users = [];
 
 //add a user into the team array
-function getTeamsv2() {
+function getTeamsv2(admin) {
   return teams;
 }
 
@@ -30,6 +30,21 @@ function getTeam(username) {
   }
 }
 
+function checkUserTeam(newuser) {
+  //test if the player & team exist already
+  const playerexists = teams.some(el => el.players.includes(newuser.username));
+  //const teamexists = teams.some(el => el.teamname.includes(newuser.teamname));
+  const teamexists = teams.findIndex(el => el.teamname === newuser.teamname);
+
+  // the client has a cookie, but no entry in the system, so lets add them
+  console.log(`Cookie and player/team!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!w ${playerexists} ${teamexists}`);
+  if (playerexists === false && teamexists === -1) {
+    console.log(`Cookie but no player/team, adding them in now`);
+    addUserV2(newuser);
+  }
+
+}
+
 function addUserV2(newuser) {
   //test if the player & team exist already
   const playerexists = teams.some(el => el.players.includes(newuser.username));
@@ -45,7 +60,7 @@ function addUserV2(newuser) {
   }
 
   //insert the player as first member of a new team
-  if (teamexists === -1 && !playerexists) {
+  if (teamexists === -1 && !playerexists && newuser.username !== 'admin') {
     teams.push({
       teamname: newuser.teamname,
       players: [newuser.username],
@@ -55,7 +70,7 @@ function addUserV2(newuser) {
   }
 
   //insert the player to an existing team
-  if (teamexists && !playerexists) {
+  if (teamexists && !playerexists && newuser.teamname !== 'admin') {
     const index = teams.findIndex(el => el.teamname === newuser.teamname);
 
     teams[index].players.push(newuser.username);
@@ -89,59 +104,11 @@ const teams = [];
   },
 ]; */
 
-function getUserScoreDEAD(unique) {
-  const arr = users.find(el => el.uniqueID === unique);
-  if (arr !== undefined) return 0;
-  return arr.score;
-}
-
-function getUsersDEAD() {
-  return users;
-}
-
-function setUserScoreDEAD(points, username) {
-  const index = users.findIndex(el => el.username === username);
-  users[index].score = users[index].score + parseInt(points);
-}
-
-function getTeamScoreDEAD() {
-  const teams = [...new Set(users.map(user => user.teamname))];
-  return teams;
-}
-
-// Group the user array to populate teams
-function getTeamsDEAD() {
-  let grouped = [];
-  grouped = _.mapObject(_.groupBy(users, "teamname"), clist =>
-    clist.map(team => _.omit(team, "teamname"))
-  );
-
-  console.log(`grouped teams: ${JSON.stringify(grouped)}`);
-  return grouped;
-}
-
-function addUserDEAD(newuser) {
-  const exists = users.some(el => el.username === newuser.username);
-
-  if (!exists) {
-    users.push({ username: newuser.username, teamname: newuser.teamname, score: 0 });
-    console.log(`added ${newuser.name} from team ${newuser.team}. Num users: ${users.length}`);
-    return true;
-  } else {
-    console.log(`We tried to add a duplicate user but failed!`);
-    return false;
-  }
-}
-
 module.exports = {
-  // addUser: addUser,
-  // getUsers: getUsers,
-  //getTeams: getTeams,
-  //getUserScore: getUserScore,
   setUserScore: setUserScore,
-  // getTeamScore: getTeamScore,
   getTeamsv2: getTeamsv2,
   addUserV2: addUserV2,
   getTeam: getTeam,
   clearScores: clearScores,
+  checkUserTeam: checkUserTeam
 };

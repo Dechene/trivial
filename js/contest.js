@@ -3,7 +3,7 @@ const csv = require("csv-parser");
 const fs = require("fs");
 
 this.current = 0;
-this.gameStarted = true;
+this.gameStarted = false;
 
 this.responses = responses = [];
 

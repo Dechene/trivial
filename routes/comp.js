@@ -1,9 +1,9 @@
 // The Competition page that users enter answers on
 
 // Get our Contest object
-const contest = require("../contest");
-const util = require("../util");
-const users = require("../users");
+const contest = require("../js/contest");
+const util = require("../js/util");
+const users = require("../js/users");
 
 var express = require("express");
 var router = express.Router();

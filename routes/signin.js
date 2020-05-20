@@ -1,4 +1,4 @@
-const contest = require("../contest");
+const contest = require("../js/contest");
 
 var express = require("express");
 var router = express.Router();

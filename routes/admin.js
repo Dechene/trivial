@@ -1,6 +1,6 @@
-const contest = require("../contest");
-const users = require("../users");
-const util = require("../util");
+const contest = require("../js/contest");
+const users = require("../js/users");
+const util = require("../js/util");
 
 var express = require("express");
 var router = express.Router();

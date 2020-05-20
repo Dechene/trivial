@@ -1,6 +1,6 @@
-const users = require("../users");
-const contest = require("../contest");
-const util = require("../util");
+const users = require("../js/users");
+const contest = require("../js/contest");
+const util = require("../js/util");
 
 var express = require("express");
 var router = express.Router();
@@ -37,9 +37,9 @@ router.get("/", function (req, res, next) {
 
     // We have to test the length for some unknown chrome bug reason
     if (user.username !== "") add = users.addUserV2(user);
-   
+
     if (add) {
-      console.log(`USER SIGNIN - About to insert COOKIE for ${user.username}`);
+      console.log(`USER SIGNIN - inserting COOKIE for ${user.username}`);
       readyToPlay = true;
       res.cookie("trivial", user);
     } else {
@@ -57,6 +57,11 @@ router.get("/", function (req, res, next) {
       username: req.cookies["trivial"].username,
       teamname: req.cookies["trivial"].teamname,
     };
+
+    // make sure this cookie has a valid player/team entry - if not, re-add them
+    if (user.username !== "") add = users.checkUserTeam(user);
+
+
     readyToPlay = true;
   } else if (isEmptyCookie && isEmptyParams) {
     console.log(`USER SIGNIN - No cookie, and no params received`);
@@ -78,8 +83,9 @@ router.get("/", function (req, res, next) {
         teamlist: users.getTeamsv2(),
       })} is just hanging in the lobby`
     );
-    res.render("lobby", { user, teamlist: users.getTeamsv2() });
+    res.render("lobby", { user, teamlist: users.getTeamsv2(1) });
   }
 });
+
 
 module.exports = router;
