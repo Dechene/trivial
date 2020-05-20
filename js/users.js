@@ -9,6 +9,7 @@ function getTeamsv2(admin) {
 
 function clearScores() {
   for (var i = 0; i < teams.length; i++) {
+    teams[i].teamscore = 0;
     for (var x = 0; x < teams[i].scores.length; x++) {
       teams[i].scores[x] = 0;
     }
@@ -21,6 +22,7 @@ function setUserScore(points, username, teamname) {
   const scoreIndex = teams[teamIndex].players.findIndex(el => el === username);
 
   teams[teamIndex].scores[scoreIndex] += parseInt(points);
+  teams[teamIndex].teamscore += parseInt(points);
 }
 
 function getTeam(username) {
@@ -38,11 +40,10 @@ function checkUserTeam(newuser) {
 
   // the client has a cookie, but no entry in the system, so lets add them
   console.log(`Cookie and player/team!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!w ${playerexists} ${teamexists}`);
-  if (playerexists === false && teamexists === -1) {
+  if (playerexists === false) {
     console.log(`Cookie but no player/team, adding them in now`);
     addUserV2(newuser);
   }
-
 }
 
 function addUserV2(newuser) {
@@ -70,7 +71,7 @@ function addUserV2(newuser) {
   }
 
   //insert the player to an existing team
-  if (teamexists && !playerexists && newuser.teamname !== 'admin') {
+  if (teamexists > -1 && !playerexists && newuser.teamname !== 'admin') {
     const index = teams.findIndex(el => el.teamname === newuser.teamname);
 
     teams[index].players.push(newuser.username);

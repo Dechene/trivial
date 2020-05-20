@@ -27,6 +27,8 @@ router.get("/", function (req, res, next) {
       contest.movePre();
     } else if (action === "next") {
       contest.moveNext();
+    } else if (action === "reset") {
+      users.clearScores();
     } else if (action === "pause") {
       contest.endGame();
     } else if (action === "start") {
