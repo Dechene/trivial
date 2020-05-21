@@ -1,6 +1,12 @@
 const _ = require("underscore");
 
 const users = [];
+const teams = [];
+
+function newGame() {
+  this.users = [];
+  this.teams = [];
+}
 
 //add a user into the team array
 function getTeamsv2(admin) {
@@ -81,7 +87,6 @@ function addUserV2(newuser) {
   return true;
 }
 
-const teams = [];
 /* const teams = [
   {
     teamname: "Blues",
@@ -111,5 +116,6 @@ module.exports = {
   addUserV2: addUserV2,
   getTeam: getTeam,
   clearScores: clearScores,
-  checkUserTeam: checkUserTeam
+  checkUserTeam: checkUserTeam,
+  newGame:newGame
 };

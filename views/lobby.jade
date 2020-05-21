@@ -9,7 +9,7 @@ html(lang="en")
      div.wrapper
       div.lobby-card.w3-card-4
         div.question.w3-container.w3-blue  
-         h1 Contest Lobby
+         h1 And the winner is....
         div.register-card
           div.name= user.username
           div.team= user.teamname          
@@ -19,4 +19,4 @@ html(lang="en")
            each player, index in t.players
              div.teammates #{player} - #{t.scores[index]}
         footer.w3-container.w3-blue
-         h5 Just wait here, the page will refresh automatically at game time!  
+         h5 That's all folks!  

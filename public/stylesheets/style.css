@@ -26,6 +26,10 @@ body {
   color: rgb(65, 157, 231);
 }
 
+h5 {
+  text-align: center;
+}
+
 .wrapper {
   width: 600px;
   min-height: 400px;
@@ -47,27 +51,6 @@ body {
 li {
   color: #00b7ff;
 }
-
-/* button {
-  color: #555;
-  background: white;
-  border: none;
-  font-family: Lato;
-  font-size: 20px;
-  text-transform: uppercase;
-  cursor: pointer;
-  font-weight: 300;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-button:hover {
-  font-weight: 400;
-}
-
-button:focus {
-  outline: none;
-}
- */
 
 .register-card {
   text-align: center;

@@ -4,7 +4,7 @@ const fs = require("fs");
 
 this.current = 0;
 this.gameStarted = false;
-
+this.isGameOver = false;
 this.responses = responses = [];
 
 /* this.responses = responses = [
@@ -27,13 +27,20 @@ this.questions = [
     compName: "Trivial - Test Comp",
     titleQuestion: "What is 1 + 1?",
     answers: ["1", "2", "3", "4"],
-    answer: 4,
+    answer: 5,
     questionImage: "",
     points: 1,
   },
 ];
 
 this.questionCount = this.questions.length;
+
+function newGame() {
+  this.current = 0;
+  this.gameStarted = false;
+  this.isGameOver = false;
+  this.responses = responses = [];
+}
 
 function getQuestion(id) {
   this.current = id;
@@ -84,8 +91,15 @@ function getResponses() {
   return responses;
 }
 
+function isGameComplete() {
+  return this.isGameOver;
+}
+
+function endGame() {
+  this.isGameOver = true;
+}
+
 function hasGameStarted() {
-  //this.gameStarted = true;
   return this.gameStarted;
 }
 
@@ -94,7 +108,7 @@ function startGame() {
   return this.gameStarted;
 }
 
-function endGame() {
+function pauseGame() {
   this.gameStarted = false;
   return this.gameStarted;
 }
@@ -159,6 +173,7 @@ function getPoints(questionid) {
 module.exports = {
   current: this.current,
   gameStarted: this.gameStarted,
+  isGameComplete: isGameComplete,
   questions: this.questions,
   responses: this.responses,
   getResponses: getResponses,
@@ -174,8 +189,10 @@ module.exports = {
   hasGameStarted: hasGameStarted,
   startGame: startGame,
   endGame: endGame,
+  pauseGame: pauseGame,
   getPoints: getPoints,
   loadContest: loadContest,
+  newGame: newGame
 };
 
 // module.exports = Contest;

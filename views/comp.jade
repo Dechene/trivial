@@ -3,7 +3,7 @@ html(lang="en")
   head
     link(href='/stylesheets/style.css', rel='stylesheet')
     link(rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css")
-    meta(http-equiv='refresh', content='30')
+    meta(http-equiv='refresh', content='7')
 
   body
     div.clearfix
@@ -21,12 +21,24 @@ html(lang="en")
               - i++;
               - if (i == selected) {
               div.response.selected
-                a.w3-button.w3-block(href="/comp?questionid=#{curQuestion.questionID}&answerid=#{i}")= option
+                - if (gameState == false) {
+                  a.w3-button.w3-block(href="")= option
+                - } else {
+                  a.w3-button.w3-block(href="/comp?questionid=#{curQuestion.questionID}&answerid=#{i}")= option
+                -}
               - } else  {
               div.response
-                a.w3-button.w3-block(href="/comp?questionid=#{curQuestion.questionID}&answerid=#{i}")= option
+                - if (gameState == false) {
+                  a.w3-button.w3-block(href="")= option
+                - } else {
+                  a.w3-button.w3-block(href="/comp?questionid=#{curQuestion.questionID}&answerid=#{i}")= option
+                -}              
               - }
           footer.w3-container.w3-blue
-            h5 Make your selection before we go the next question!
+            - if (gameState == false) {
+            h5 #{(selected == curQuestion.answer ? "Review mode: You got this one Correct! :) " : "Review mode: Your selection was Wrong! :(")}
+            - } else {
+            h5 Make your selection before we move on!
+            - }
 
 

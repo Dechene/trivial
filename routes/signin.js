@@ -1,5 +1,3 @@
-const contest = require("../js/contest");
-
 var express = require("express");
 var router = express.Router();
 
@@ -9,7 +7,6 @@ router.get("/", function (req, res, next) {
     username: "Nickname",
     teamname: "Team Name",
   };
-
 
   try {
     trivial = {

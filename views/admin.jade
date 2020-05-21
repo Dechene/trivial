@@ -3,7 +3,7 @@ html(lang="en")
   head
     link(href='/stylesheets/style.css', rel='stylesheet')
     link(rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css")
-    meta(http-equiv='refresh', content='10')
+    meta(http-equiv='refresh', content='7')
 
   body
     div.clearfix
@@ -32,10 +32,11 @@ html(lang="en")
                a.w3-button.w3-block= option
               - }
             div.admin.w3-container
-              a(href="/admin?action=pause").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Pause Game  
-              a(href="/admin?action=start").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Start Game 
-              a(href="/admin?action=score").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Check Answers
-              a(href="/admin?action=reset").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Reset Scores
+              a(href="/admin?action=start").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Start Game
+              a(href="/admin?action=pause").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Review Answers
+              a(href="/admin?action=endgame").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Complete Game 
+              div.admin.w3-container 
+              a(href="/admin?action=newgame").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge New Game  
               a(href="/admin?action=load").w3-button.w3-white.w3-border.w3-border-blue.w3-round-xlarge Load Contest
           div.users
             each t in teamlist

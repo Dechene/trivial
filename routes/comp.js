@@ -24,16 +24,22 @@ router.get("/", function (req, res, next) {
   if (isEmptyCookie && isEmptyParams) {
     console.log(`USER SIGNIN - No cookie, and no params received`);
     pushSignIn = true;
+  } else if (!isEmptyCookie && req.cookies["trivial"].username.length > 0) {
+    console.log(`USER SIGNIN - inserting from cookie on comp page: ${JSON.stringify(req.cookies)}`);
+    user = {
+      username: req.cookies["trivial"].username,
+      teamname: req.cookies["trivial"].teamname,
+    };
   }
+
+  // make sure this cookie has a valid player/team entry - if not, re-add them
+  if (user.username !== "") add = users.checkUserTeam(user);
 
   // Test if the game is inplay!
   // If yes, display the current question
   // If no, redirect to the lobby
-  if (contest.hasGameStarted() === true) {
-    console.log(`The game has begun so bounce to the question page`);
-    console.log(`The current questionid from comp page is ${contest.getCurrentQuestionID()}`);
-  } else {
-    console.log(`The game is paused, go to the lobby!`);
+  if (contest.isGameComplete() === true) {
+    console.log(`The game is finished, go to the lobby to see the winner!`);
     res.redirect(`${req.path}\lobby`);
   }
 
@@ -57,20 +63,23 @@ router.get("/", function (req, res, next) {
     // Display the question
     const curQuestion = contest.getQuestion(contest.getCurrentQuestionID());
 
+    //Is the game active or paused?
+    const gameState = contest.hasGameStarted();
+
     // Remove the parameters from the url so we can safely refresh
     res.redirect(`${req.path}\comp`);
   } else if (pushSignIn === false) {
 
-      const username = req.cookies["trivial"].username;
-      const questionid = contest.getCurrentQuestionID();
-      const uniqueID = username + questionid;
+    const username = req.cookies["trivial"].username;
+    const questionid = contest.getCurrentQuestionID();
+    const uniqueID = username + questionid;
 
-      const selected = contest.getSubmission(uniqueID);
-    
+    const selected = contest.getSubmission(uniqueID);
+
     // Return the current question to the user
     const curQuestion = contest.getQuestion(contest.getCurrentQuestionID());
 
-    res.render("comp", { curQuestion: curQuestion, selected: selected, username });
+    res.render("comp", { curQuestion: curQuestion, selected: selected, username, gameState: contest.hasGameStarted() });
   } else if (pushSignIn === true) {
     console.log(`USER SIGNIN - No cookie, and no params received`);
     user = {

@@ -61,7 +61,6 @@ router.get("/", function (req, res, next) {
     // make sure this cookie has a valid player/team entry - if not, re-add them
     if (user.username !== "") add = users.checkUserTeam(user);
 
-
     readyToPlay = true;
   } else if (isEmptyCookie && isEmptyParams) {
     console.log(`USER SIGNIN - No cookie, and no params received`);
@@ -72,7 +71,7 @@ router.get("/", function (req, res, next) {
   }
 
   // Test if the game has begun or not - if yes, start playing, if not, stay in the lobby
-  if (contest.hasGameStarted() === true && readyToPlay) {
+  if (contest.hasGameStarted() === true && readyToPlay && !contest.isGameComplete()) {
     console.log(`The game has begun so redirecting the user now`);
     res.redirect(`${req.path}\comp`);
   } else {
@@ -86,6 +85,5 @@ router.get("/", function (req, res, next) {
     res.render("lobby", { user, teamlist: users.getTeamsv2(1) });
   }
 });
-
 
 module.exports = router;

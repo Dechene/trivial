@@ -7,6 +7,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+
+  // scorecheck
+  checkAnswers();
+
   // Test the attributes which have been passed in to us
   const isEmptyCookie = util.isEmpty(req.cookies);
 
@@ -30,13 +34,16 @@ router.get("/", function (req, res, next) {
     } else if (action === "reset") {
       users.clearScores();
     } else if (action === "pause") {
-      contest.endGame();
+      contest.pauseGame();
     } else if (action === "start") {
       contest.startGame();
-    } else if (action === "score") {
-      checkAnswers();
     } else if (action === "load") {
       contest.loadContest();
+    } else if (action === "endgame") {
+      contest.endGame();
+    } else if (action === "newgame") {
+      contest.newGame();
+      users.newGame();
     }
 
     const gameState = contest.hasGameStarted();
@@ -50,7 +57,7 @@ router.get("/", function (req, res, next) {
     // console.log({ question, count, gameState });
     // Display as normal, or remove the parameters from the url so we can safely refresh
     if (action === "") {
-      res.render("admin", { question, count, gameState, teamlist: users.getTeamsv2()  });
+      res.render("admin", { question, count, gameState, teamlist: users.getTeamsv2() });
     } else {
       res.redirect(`${req.path}\admin`);
     }
