@@ -8,7 +8,7 @@ var router = express.Router();
 /* GET home page. */
 router.get("/", function (req, res, next) {
 
-  // scorecheck
+  // scorecheck upon load
   checkAnswers();
 
   // Test the attributes which have been passed in to us
@@ -31,8 +31,6 @@ router.get("/", function (req, res, next) {
       contest.movePre();
     } else if (action === "next") {
       contest.moveNext();
-    } else if (action === "reset") {
-      users.clearScores();
     } else if (action === "pause") {
       contest.pauseGame();
     } else if (action === "start") {
@@ -55,6 +53,7 @@ router.get("/", function (req, res, next) {
     // count up how many answers we have so far for this question
     const count = contest.getAnswers(question.questionID).length;
     // console.log({ question, count, gameState });
+    
     // Display as normal, or remove the parameters from the url so we can safely refresh
     if (action === "") {
       res.render("admin", { question, count, gameState, teamlist: users.getTeamsv2() });

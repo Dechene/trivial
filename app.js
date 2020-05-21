@@ -1,4 +1,3 @@
-
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
@@ -11,7 +10,6 @@ const compRouter = require("./routes/comp");
 const lobbyRouter = require("./routes/lobby");
 const signinRouter = require("./routes/signin");
 const contest = require("./js/contest");
-
 
 var app = express();
 var port = 8080;

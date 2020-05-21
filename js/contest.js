@@ -194,5 +194,3 @@ module.exports = {
   loadContest: loadContest,
   newGame: newGame
 };
-
-// module.exports = Contest;

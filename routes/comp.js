@@ -35,9 +35,7 @@ router.get("/", function (req, res, next) {
   // make sure this cookie has a valid player/team entry - if not, re-add them
   if (user.username !== "") add = users.checkUserTeam(user);
 
-  // Test if the game is inplay!
-  // If yes, display the current question
-  // If no, redirect to the lobby
+  // Test if the game is complete or not!
   if (contest.isGameComplete() === true) {
     console.log(`The game is finished, go to the lobby to see the winner!`);
     res.redirect(`${req.path}\lobby`);
@@ -59,9 +57,6 @@ router.get("/", function (req, res, next) {
 
     //Submit response to controller
     contest.submitAnswer(response);
-
-    // Display the question
-    const curQuestion = contest.getQuestion(contest.getCurrentQuestionID());
 
     //Is the game active or paused?
     const gameState = contest.hasGameStarted();
